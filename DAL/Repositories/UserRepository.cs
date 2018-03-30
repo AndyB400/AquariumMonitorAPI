@@ -47,7 +47,10 @@ namespace AquariumMonitor.DAL
 
             using (var connection = _connectionFactory.GetOpenConnection())
             {
-                user.Id = await connection.QueryFirstAsync<int>(InsertQuery, user);
+               var result = await connection.QueryFirstAsync(InsertQuery, user);
+
+                user.Id = result.Id;
+                user.RowVersion = result.RowVersion;
             }
 
              _logger.LogInformation($"Finished adding User. UserId:'{user.Id}'.");
@@ -128,7 +131,7 @@ namespace AquariumMonitor.DAL
 
             using (var connection = _connectionFactory.GetOpenConnection())
             {
-                await connection.ExecuteAsync(UpdateQuery, user);
+                user.RowVersion = await connection.QueryFirstAsync<byte[]>(UpdateQuery, user);
             }
 
             _logger.LogInformation($"Finshed updating User. UserId:'{user.Id}'.");
