@@ -235,7 +235,7 @@ namespace AquariumAPI.Tests
             SetupController();
 
             //Act
-            var result = await controller.Post(null);
+            var result = await controller.Post(model);
 
             //Assert
             Assert.Equal(typeof(CreatedResult), result.GetType());
