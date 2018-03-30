@@ -438,7 +438,7 @@
       <Name>Models</Name>
     </ProjectReference>
     <ProjectReference Include="..\Pwned\Pwned.csproj">
-      <Project>{00BCA575-5B8E-4C7F-A011-7EAD158EFCCB}</Project>
+      <Project>{3356db1d-052a-4dbd-aeb7-a9869a4d3498}</Project>
       <Name>Pwned</Name>
     </ProjectReference>
   </ItemGroup>
