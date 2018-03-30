@@ -126,7 +126,7 @@ namespace AquariumAPI.Tests
         {
             //Arrange
             SetupController();
-            AquariumModel model = null;
+            var model = new AquariumModel();
 
             //Act
             var result = await controller.Post(model);
@@ -162,7 +162,7 @@ namespace AquariumAPI.Tests
             SetupController();
 
             //Act
-            var result = await controller.Post(null);
+            var result = await controller.Post(model);
 
             //Assert
             Assert.Equal(typeof(CreatedResult), result.GetType());
