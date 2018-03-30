@@ -14,26 +14,27 @@ namespace AquariumMonitor.DAL
     {
         private const string GetByUserNameQuery = @"SELECT Id,Username,FirstName,LastName,Email,[RowVersion], 
                                                 (SELECT TOP 1 PasswordHashAndSalt FROM dbo.UserPasswords ORDER BY Created DESC) AS Password
-                                                FROM Users WHERE Username = @userName";
+                                                FROM dbo.Users WHERE Username = @userName";
 
         private const string GetByIdQuery = @"SELECT Id,Username,FirstName,LastName,Email,[RowVersion], 
                                                 (SELECT TOP 1 PasswordHashAndSalt FROM dbo.UserPasswords ORDER BY Created DESC) AS Password
-                                                FROM Users WHERE Id = @id";
+                                                FROM dbo.Users WHERE Id = @id";
 
-        private const string InsertQuery = @"INSERT INTO Users (Username,FirstName,LastName,Email)
+        private const string InsertQuery = @"INSERT INTO dbo.Users (Username,FirstName,LastName,Email)
                                              VALUES (@Username,@FirstName,@LastName,@Email);
-                                             SELECT CAST(SCOPE_IDENTITY() AS INT);";
+                                             SELECT Id, RowVersion FROM Users WHERE Id = CAST(SCOPE_IDENTITY() AS INT);";
 
-        private const string UpdateQuery = @"UPDATE Users SET FirstName = @FirstName,LastName = @LastName, Email = @Email
-                                             WHERE Id = @Id;";
+        private const string UpdateQuery = @"UPDATE dbo.Users SET FirstName = @FirstName,LastName = @LastName, Email = @Email
+                                             WHERE Id = @Id;
+                                             SELECT RowVersion FROM dbo.Users WHERE Id = @Id;";
 
         private const string DeleteQuery = @"UPDATE Users SET Deleted = 1 WHERE Id = @Id;";
 
-        private const string UpdateLastLoginQuery = @"UPDATE Users SET LastLogin = @LastLogin WHERE Id = @Id;";
+        private const string UpdateLastLoginQuery = @"UPDATE dbo.Users SET LastLogin = @LastLogin WHERE Id = @Id;";
 
-        private const string UserClaimsQuery = @"SELECT Name FROM vw_UserClaims WHERE UserId = @userId;";
+        private const string UserClaimsQuery = @"SELECT Name FROM dbo.vw_UserClaims WHERE UserId = @userId;";
         
-        private string ExistsQuery = "SELECT 'Exists' FROM Users WHERE Id = @id";
+        private string ExistsQuery = "SELECT 'Exists' FROM dbo.Users WHERE Id = @id";
 
         public UserRepository(IConnectionFactory connectionFactory,
             ILogger<UserRepository> logger) : base (connectionFactory, logger)

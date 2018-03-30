@@ -8,7 +8,7 @@ namespace AquariumMonitor.DAL
 {
     public class UnitRepository : BaseRepository, IUnitRepository
     {
-        private const string GetByNameQuery = @"SELECT Id, Name FROM Units WHERE Name = @name";
+        private const string GetByNameQuery = @"SELECT Id, Name FROM dbo.Units WHERE Name = @name";
 
         public UnitRepository(IConnectionFactory connectionFactory,
             ILogger<UnitRepository> logger) : base(connectionFactory, logger)
