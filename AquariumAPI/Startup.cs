@@ -129,18 +129,7 @@ namespace AquariumAPI
         {
             app.UseAuthentication();
 
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-
-                loggerFactory.AddSerilog(new LoggerConfiguration()
-                           .MinimumLevel.Information()
-                           .Enrich.WithEnvironmentUserName()
-                           .Enrich.WithMachineName()
-                           .WriteTo.MSSqlServer(connectionString: Configuration.GetConnectionString(Constants.DBConnectionName), tableName: Constants.SerilogTableName)
-                           .CreateLogger());
-            }
-            if (env.IsStaging())
+            if (env.IsDevelopment() || env.IsStaging())
             {
                 app.UseDeveloperExceptionPage();
 
