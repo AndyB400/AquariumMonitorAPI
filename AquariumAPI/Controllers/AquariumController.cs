@@ -62,6 +62,8 @@ namespace AquariumAPI.Controllers
         [UserSecurityCheck]
         public async Task<IActionResult> Post([FromBody]AquariumModel model)
         {
+            if (model == null) return BadRequest();
+
             try
             {
                 var aquarium = Mapper.Map<Aquarium>(model);
@@ -97,10 +99,16 @@ namespace AquariumAPI.Controllers
         [HttpPut("{aquariumId}")]
         public async Task<IActionResult> Put(int aquariumId, [FromBody]AquariumModel model)
         {
+            if (model == null) return BadRequest();
+
             try
             {
                 var aquarium = await _repository.Get(UserId, aquariumId);
-                if (aquarium == null) return NotFound();
+                if (aquarium == null)
+                {
+                    Logger.Warning($"Update Aquarium. Not found. AquariumId:{aquariumId} UserId: {UserId}");
+                    return NotFound();
+                }
 
                 if (Request.Headers.ContainsKey(HeaderNames.IfMatch))
                 {
