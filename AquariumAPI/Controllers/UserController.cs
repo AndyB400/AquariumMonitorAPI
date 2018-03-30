@@ -57,6 +57,8 @@ namespace AquariumAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]UserModel model)
         {
+            if (model == null) return BadRequest();
+
             try
             {
                 var user = Mapper.Map<User>(model);
@@ -117,6 +119,8 @@ namespace AquariumAPI.Controllers
         [HttpPut("{userId}")]
         public async Task<IActionResult> Put(int userId, [FromBody]UserModel model)
         {
+            if (model == null) return BadRequest();
+
             try
             {
                 var user = await _repository.Get(userId);
