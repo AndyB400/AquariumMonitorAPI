@@ -1,7 +1,6 @@
 ﻿using AquariumAPI.Controllers;
 using System;
 using Microsoft.Extensions.Configuration;
-using Serilog;
 using Xunit;
 using Moq;
 using AquariumMonitor.DAL.Interfaces;
@@ -215,7 +214,8 @@ namespace AquariumAPI.Tests
             //Arrange
             var user = new User
             {
-                Password = "Password"
+                Password = "Password",
+                RowVersion = Encoding.ASCII.GetBytes("RowVersion")
             };
             var model = new UserModel
             {
@@ -272,13 +272,15 @@ namespace AquariumAPI.Tests
         public async Task Put_returns_ok()
         {
             //Arrange
-            var user = new User();
+            var user = new User
+            {
+                RowVersion = Encoding.ASCII.GetBytes("RowVersion")
+            };
             var model = new UserModel();
             mockMapper.Setup(am => am.Map(It.IsAny<UserModel>(), It.IsAny<User>())).Verifiable();
             mockMapper.Setup(am => am.Map<UserModel>(It.IsAny<User>())).Returns(model);
 
-            var existingUser = new User();
-            mockUserRepository.Setup(ur => ur.Get(It.IsAny<int>())).ReturnsAsync(existingUser).Verifiable();
+            mockUserRepository.Setup(ur => ur.Get(It.IsAny<int>())).ReturnsAsync(user).Verifiable();
 
             SetupController();
 
