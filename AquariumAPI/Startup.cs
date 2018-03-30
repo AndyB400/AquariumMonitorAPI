@@ -20,6 +20,8 @@ using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Authorization;
 using Pwned;
+using AquariumAPI.Controllers;
+using AquariumMonitor.BusinessLogic.Adapters;
 
 namespace AquariumAPI
 {
@@ -103,6 +105,7 @@ namespace AquariumAPI
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<IValidationManager, ValidationManager>();
             services.AddScoped<IHaveIBeenPwnedRestClient, HaveIBeenPwnedRestClient>();
+            services.AddScoped<ILoggerAdapter<BaseController>, LoggerAdapter<BaseController>>();
 
             // Repositories
             services.AddScoped<IAquariumRepository, AquariumRepository>();
