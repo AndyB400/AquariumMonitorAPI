@@ -148,6 +148,42 @@ namespace AquariumMonitor.API.Controllers
             return BadRequest("Could not update Aquarium");
         }
 
+        // DELETE: api/aqua/5
+        [AllowAnonymous]
+        [HttpDelete("{aquariumId}")]
+        public async Task<IActionResult> Delete(int aquariumId)
+        {
+            try
+            {
+                var aquarium = await _repository.Get(1, aquariumId);
+                if (aquarium == null)
+                {
+                    Logger.Warning($"Aquarium not found. AquariumID: {aquariumId}");
+                    return NotFound();
+                }
+
+                if (Request.Headers.ContainsKey(HeaderNames.IfMatch))
+                {
+                    var etag = Request.Headers[HeaderNames.IfMatch].First();
+                    if (etag != Convert.ToBase64String(aquarium.RowVersion))
+                    {
+                        return StatusCode((int)HttpStatusCode.PreconditionFailed);
+                    }
+                }
+
+                Logger.Information($"Deleting Aquarium. AquariumId:{aquariumId}");
+                await _repository.Delete(aquariumId);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex, $"An error occured whilst trying to delete Aquarium. AquariumId:{aquariumId}");
+            }
+            return BadRequest("Could not delete Aquarium");
+        }
+
+
         private async Task LookupTypeAndUnits(Aquarium aquarium)
         {
             // Lookup units
