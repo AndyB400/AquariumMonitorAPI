@@ -84,8 +84,8 @@ namespace AquariumMonitor.API.Controllers
                 }
 
                 // Use the URL User Id
-                if (aquarium.User == null) aquarium.User = new User();
-                aquarium.User.Id = UserId;
+                if (aquarium.User == null) aquarium.User = new User{ Id = 1};
+                aquarium.User.Id = 1;
 
                 await LookupTypeAndUnits(aquarium);
 
@@ -95,7 +95,7 @@ namespace AquariumMonitor.API.Controllers
 
                 AddETag(aquarium.RowVersion);
 
-                var url = Url.Link("AquariumGet", new { UserId, aquariumId = aquarium.Id });
+                var url = Url.Link("AquariumGet", new { aquariumId = aquarium.Id });
                 return Created(url, Mapper.Map<AquariumModel>(aquarium));
             }
             catch (Exception ex)
@@ -114,7 +114,7 @@ namespace AquariumMonitor.API.Controllers
 
             try
             {
-                var aquarium = await _repository.Get(UserId, aquariumId);
+                var aquarium = await _repository.Get(1, aquariumId);
                 if (aquarium == null)
                 {
                     Logger.Warning($"Aquarium not found. AquariumID: {aquariumId}");

@@ -92,7 +92,7 @@ namespace AquariumMonitor.API.Controllers
 
                 AddETag(aquarium.RowVersion);
 
-                var url = Url.Link("AquariumGet", new { UserId, aquariumId = aquarium.Id });
+                var url = Url.Link("AquariumGet", new { aquariumId = aquarium.Id });
                 return Created(url, Mapper.Map<AquariumModel>(aquarium));
             }
             catch (Exception ex)
