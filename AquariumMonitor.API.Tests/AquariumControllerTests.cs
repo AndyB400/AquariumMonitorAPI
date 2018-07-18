@@ -111,7 +111,7 @@ namespace AquariumMonitor.API.Tests
             SetupController();
 
             //Act
-            var result = await _controller.GetForUser();
+            var result = await _controller.Get();
 
             //Assert
             Assert.Equal(typeof(OkObjectResult), result.GetType());

@@ -11,10 +11,8 @@ using AquariumMonitor.BusinessLogic.Interfaces;
 using Microsoft.Net.Http.Headers;
 using System.Linq;
 using System.Net;
-using AquariumMonitor.API.Controllers;
 using AquariumMonitor.Models.ViewModels;
 using BusinessLogic.Interfaces;
-using Microsoft.AspNetCore.Authorization;
 
 namespace AquariumMonitor.API.Controllers
 {
@@ -41,7 +39,7 @@ namespace AquariumMonitor.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetForUser()
+        public async Task<IActionResult> Get()
         {
             var aquariums = await _repository.GetForUser(UserId);
 
