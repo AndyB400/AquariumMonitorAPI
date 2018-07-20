@@ -8,15 +8,11 @@ using AquariumMonitor.Models;
 using AquariumMonitor.API.Filters;
 using AquariumMonitor.Models.ViewModels;
 using BusinessLogic.Interfaces;
-using Microsoft.AspNetCore.Cors;
 
 namespace AquariumMonitor.API.Controllers
 {
     [AquariumSecurityCheck]
-    [EnableCors("AquariumMonitor")]
-    [Produces("application/json")]
     [Route("api/aquariums/{aquariumId}/waterchanges")]
-    [ValidateModel]
     public class WaterChangeController : BaseController
     {
         private readonly IWaterChangeRepository _repository;

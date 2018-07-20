@@ -8,9 +8,15 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using BusinessLogic.Interfaces;
+using AquariumMonitor.API.Filters;
+using Microsoft.AspNetCore.Cors;
 
 namespace AquariumMonitor.API.Controllers
 {
+    [ApiController]
+    [Produces("application/json")]
+    [ValidateModel]
+    [EnableCors("AquariumMonitor")]
     public abstract class BaseController : Controller
     {
         public const string URLHELPER = "URLHELPER";

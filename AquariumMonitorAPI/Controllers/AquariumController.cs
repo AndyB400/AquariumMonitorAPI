@@ -5,7 +5,6 @@ using AquariumMonitor.DAL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using AquariumMonitor.Models;
-using Microsoft.AspNetCore.Cors;
 using AquariumMonitor.API.Filters;
 using AquariumMonitor.BusinessLogic.Interfaces;
 using Microsoft.Net.Http.Headers;
@@ -17,10 +16,7 @@ using BusinessLogic.Interfaces;
 namespace AquariumMonitor.API.Controllers
 {
     [AquariumSecurityCheck]
-    [EnableCors("AquariumMonitor")]
-    [Produces("application/json")]
     [Route("api/aquariums")]
-    [ValidateModel]
     public class AquariumController : BaseController
     {
         private readonly IAquariumRepository _repository;

@@ -14,9 +14,7 @@ using AquariumMonitor.Models.ViewModels;
 
 namespace AquariumMonitor.API.Controllers
 {
-    [ValidateModel]
     [UserSecurityCheck]
-    [Produces("application/json")]
     [Route("api/users")]
     public class UserController : BaseController
     {

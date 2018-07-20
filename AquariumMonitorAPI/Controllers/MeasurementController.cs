@@ -8,16 +8,12 @@ using AquariumMonitor.Models;
 using AquariumMonitor.Models.ViewModels;
 using AutoMapper;
 using BusinessLogic.Interfaces;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AquariumMonitor.API.Controllers
 {
     [AquariumSecurityCheck]
-    [EnableCors("AquariumMonitor")]
-    [Produces("application/json")]
     [Route("api/aquariums/{aquariumId}/measurements")]
-    [ValidateModel]
     public class MeasurementController : BaseController
     {
         private readonly IMeasurementRepository _repository;

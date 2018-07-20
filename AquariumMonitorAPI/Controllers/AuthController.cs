@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using AquariumMonitor.API.Filters;
 using AquariumMonitor.DAL.Interfaces;
 using System.Threading.Tasks;
 using AquariumMonitor.BusinessLogic.Interfaces;
@@ -13,8 +12,6 @@ using AquariumMonitor.Models.ViewModels;
 
 namespace AquariumMonitor.API.Controllers
 {
-    [ValidateModel]
-    [Produces("application/json")]
     [Route("api/auth")]
     public class AuthController : Controller
     {
