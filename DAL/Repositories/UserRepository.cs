@@ -127,7 +127,7 @@ namespace AquariumMonitor.DAL
 
             using (var connection = _connectionFactory.GetOpenConnection())
             {
-                await connection.ExecuteAsync(UpdateQuery, user);
+                user.RowVersion = await connection.QueryFirstAsync<byte[]>(UpdateQuery, user);
             }
 
             _logger.LogInformation($"Finshed updating User. UserId:'{user.Id}'.");

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AquariumMonitor.BusinessLogic.Interfaces
+namespace BusinessLogic.Interfaces
 {
     public interface ILoggerAdapter<T>
     {

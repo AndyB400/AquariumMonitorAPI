@@ -14,29 +14,29 @@ namespace AquariumMonitor.DAL
         private const string GetAllForUserQuery = @"SELECT Id,Name,Created,Notes,UserId,OfficalVolume,ActualVolume,Width,Height,[Length], [RowVersion]
                                                     ,AquariumTypeId AS Id, AquariumTypeName As Name,DimesionUnitId As Id, DimesionUnitName As Name,
                                                     VolumeUnitId As Id, VolumeUnitName As Name
-                                                    FROM vw_Aquarium a
+                                                    FROM dbo.vw_Aquarium a
                                                     WHERE UserId = @userId";
         private const string GetByIdForUserQuery = @"SELECT Id,Name,Created,Notes,UserId,OfficalVolume,ActualVolume,Width,Height,[Length], [RowVersion]
                                                     ,AquariumTypeId AS Id, AquariumTypeName As Name,DimesionUnitId As Id, DimesionUnitName As Name,
                                                     VolumeUnitId As Id, VolumeUnitName As Name
-                                                    FROM vw_Aquarium a
+                                                    FROM dbo.vw_Aquarium a
                                                     WHERE UserId = @userId
                                                     AND Id = @id";      
 
-        private const string InsertQuery = @"INSERT INTO Aquariums (Name,Notes,UserId,AquariumTypeId,OfficalVolume,ActualVolume,VolumeUnitId,Width,Height,[Length],DimesionUnitId)
+        private const string InsertQuery = @"INSERT INTO dbo.Aquariums (Name,Notes,UserId,AquariumTypeId,OfficalVolume,ActualVolume,VolumeUnitId,Width,Height,[Length],DimesionUnitId)
                                             VALUES (@Name,@Notes,@UserId,@AquariumTypeId,@OfficalVolume,@ActualVolume,@VolumeUnitId,@Width,@Height,@Length,@DimesionUnitId);
-                                            SELECT Id, RowVersion FROM Aquariums WHERE Id = CAST(SCOPE_IDENTITY() AS INT);";
+                                            SELECT Id, RowVersion FROM dbo.Aquariums WHERE Id = CAST(SCOPE_IDENTITY() AS INT);";
 
         private const string DeleteQuery = @"UPDATE Aquariums SET Deleted = 1 WHERE Id = @Id;";
 
-        private const string UpdateQuery = @"UPDATE Aquariums SET [Name] = @Name, Notes = @Notes, AquariumTypeId = @AquariumTypeId, OfficalVolume = @OfficalVolume,
+        private const string UpdateQuery = @"UPDATE dbo.Aquariums SET [Name] = @Name, Notes = @Notes, AquariumTypeId = @AquariumTypeId, OfficalVolume = @OfficalVolume,
                                             ActualVolume = @ActualVolume, VolumeUnitId = @VolumeUnitId, Width = @Width, Height = @Height, [Length] = @Length,
                                             DimesionUnitId = @DimesionUnitId
                                             WHERE Id = @Id;
-                                            SELECT RowVersion FROM Aquariums WHERE Id = @Id";
+                                            SELECT RowVersion FROM dbo.Aquariums WHERE Id = @Id";
 
-        private string ExistsByIdQuery = "SELECT 'Exists' FROM Aquariums WHERE UserId = @userId AND Id = @id";
-        private string ExistsByUsernameQuery = "SELECT 'Exists' FROM Aquariums a JOIN Users u ON a.UserId = u.Id WHERE u.Username = @username AND a.Id = @id";
+        private string ExistsByIdQuery = "SELECT 'Exists' FROM dbo.Aquariums WHERE UserId = @userId AND Id = @id";
+        private string ExistsByUsernameQuery = "SELECT 'Exists' FROM dbo.Aquariums a JOIN dbo.Users u ON a.UserId = u.Id WHERE u.Username = @username AND a.Id = @id";
 
         public AquariumRepository(IConnectionFactory connectionFactory,
             ILogger<AquariumRepository> logger) : base (connectionFactory, logger)

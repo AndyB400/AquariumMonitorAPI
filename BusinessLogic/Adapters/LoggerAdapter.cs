@@ -1,8 +1,8 @@
-﻿using AquariumMonitor.BusinessLogic.Interfaces;
+﻿using System;
+using BusinessLogic.Interfaces;
 using Microsoft.Extensions.Logging;
-using System;
 
-namespace AquariumMonitor.BusinessLogic.Adapters
+namespace BusinessLogic.Adapters
 {
     public class LoggerAdapter<T> : ILoggerAdapter<T>
     {

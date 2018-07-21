@@ -10,7 +10,7 @@ namespace AquariumMonitor.Models.Validation
     {
         public static List<ValidationResult> Validate(object instance, bool validateAllProperties = true)
         {
-            RegisterMetadataClass(instance);
+            //RegisterMetadataClass(instance);
 
             var validationContext = new ValidationContext(instance, null, null);
             var validationResults = new List<ValidationResult>();
@@ -20,21 +20,21 @@ namespace AquariumMonitor.Models.Validation
             return validationResults;
         }
 
-        private static void RegisterMetadataClass(object instance)
-        {
-            var modelType = instance.GetType();
-            var metadataType = GetMetadataType(modelType);
+        //private static void RegisterMetadataClass(object instance)
+        //{
+        //    var modelType = instance.GetType();
+        //    var metadataType = GetMetadataType(modelType);
 
-            if (metadataType != null)
-            {
-                TypeDescriptor.AddProviderTransparent(new AssociatedMetadataTypeTypeDescriptionProvider(modelType, metadataType), modelType);
-            }
-        }
+        //    if (metadataType != null)
+        //    {
+        //        TypeDescriptor.AddProviderTransparent(new AssociatedMetadataTypeTypeDescriptionProvider(modelType, metadataType), modelType);
+        //    }
+        //}
 
-        private static Type GetMetadataType(Type type)
-        {
-            var attribute = (MetadataTypeAttribute)type.GetCustomAttributes(typeof(MetadataTypeAttribute), true).FirstOrDefault();
-            return attribute == null ? null : attribute.MetadataClassType;
-        }
+        //private static Type GetMetadataType(Type type)
+        //{
+        //    var attribute = (MetadataTypeAttribute)type.GetCustomAttributes(typeof(MetadataTypeAttribute), true).FirstOrDefault();
+        //    return attribute == null ? null : attribute.MetadataClassType;
+        //}
     }
 }

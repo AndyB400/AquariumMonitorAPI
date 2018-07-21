@@ -13,33 +13,33 @@ namespace AquariumMonitor.DAL
     public class MeasurementRepository : BaseRepository, IMeasurementRepository
     {
         private const string GetByAllForAquariumQuery = @"SELECT Id,UnitId,AquariumId,Value,Taken,UserId,[RowVersion]
-                                                        FROM Measurements m
+                                                        FROM dbo.Measurements m
                                                         WHERE m.[AquariumId] = @aquariumId
                                                         AND m.UserId = @userId
                                                         AND (m.Deleted IS NULL OR m.Deleted = 0);";
 
         private const string GetQuery = @"SELECT m.Id,AquariumId,Value,Taken,UserId,U.Id AS UnitId,U.Name
                                         ,mt.Id AS MeasurementTypeId,mt.Name,m.[RowVersion]
-                                        FROM Measurements m
-                                        JOIN Units u ON m.UnitId = u.Id
-                                        JOIN MeasurementTypes mt ON mt.Name = m.MeasurementType
+                                        FROM dbo.Measurements m
+                                        JOIN dbo.Units u ON m.UnitId = u.Id
+                                        JOIN dbo.MeasurementTypes mt ON mt.Name = m.MeasurementType
                                         WHERE m.Id = @id
                                         AND (m.Deleted IS NULL OR m.Deleted = 0);";
 
-        private const string InsertQuery = @"INSERT INTO Measurements (MeasurementTypeId,UnitId,AquariumId,Value,Taken,UserId)
+        private const string InsertQuery = @"INSERT INTO dbo.Measurements (MeasurementTypeId,UnitId,AquariumId,Value,Taken,UserId)
                                              VALUES (@MeasurementTypeId,@UnitId,@AquariumId,@Value,@Taken,@UserId);
-                                             SELECT Id, RowVersion FROM Measurements WHERE Id = CAST(SCOPE_IDENTITY() AS INT);";
+                                             SELECT Id, RowVersion FROM dbo.Measurements WHERE Id = CAST(SCOPE_IDENTITY() AS INT);";
 
-        private const string UpdateQuery = @"UPDATE Measurements
+        private const string UpdateQuery = @"UPDATE dbo.Measurements
                                             SET MeasurementTypeId = @MeasurementTypeId,
                                             UnitId = @UnitId,
                                             AquariumId = @AquariumId,
                                             Value = @Value,
                                             Taken = @Taken
                                             WHERE Id = @Id;
-                                            SELECT RowVersion FROM Measurements WHERE Id = @Id;";
+                                            SELECT RowVersion FROM dbo.Measurements WHERE Id = @Id;";
 
-        private const string DeleteQuery = @"UPDATE Measurements SET Deleted = 1 WHERE Id = @Id;";
+        private const string DeleteQuery = @"UPDATE dbo.Measurements SET Deleted = 1 WHERE Id = @Id;";
 
         public MeasurementRepository(IConnectionFactory connectionFactory,
             ILogger<MeasurementRepository> logger) : base(connectionFactory, logger)
