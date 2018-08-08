@@ -27,6 +27,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Pwned;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace AquariumMonitor.API
 {
@@ -101,6 +102,10 @@ namespace AquariumMonitor.API
                     opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
 				}).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "AquariumMonitor API", Version = "v1" });
+            });
 
             services.AddApiVersioning(cfg =>
             {
@@ -151,6 +156,12 @@ namespace AquariumMonitor.API
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "AquariumMonitor API V1");
+            });
 
             app.UseCookiePolicy();
             app.UseCors(Configuration[Constants.CorsPolicyName]);
